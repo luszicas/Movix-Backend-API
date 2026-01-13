@@ -1,0 +1,62 @@
+﻿@* @model Movix.Web.Areas.Admin.Models.GeneroEditVm *@
+@* @{ *@
+@*     ViewData["Title"] = "Editar Gênero"; *@
+@* } *@
+@* <h2 class="mb-3">Editar Gênero</h2> *@
+@* <form asp-action="Edit" method="post"> *@
+@*     @Html.AntiForgeryToken() *@
+@*     <input type="hidden" asp-for="Id" /> *@
+@*     <partial name="_Form" /> *@
+@*     <div class="mt-3"> *@
+@*         <button class="btn btn-success" type="submit">Salvar</button> *@
+@*         <a class="btn btn-danger ms-2" asp-action="Index">Cancelar</a> *@
+@*     </div> *@
+@* </form> *@
+@* @section Scripts { *@
+@*     <partial name="_ValidationScriptsPartial" /> *@
+@* } *@
+
+
+@model Movix.Web.Areas.Admin.Models.GeneroEditVm
+
+@{
+    ViewData["Title"] = "Editar Gênero";
+}
+
+<div class="container" style="padding-top: 140px;">
+
+    <!-- Título + Voltar -->
+    <div class="d-flex justify-content-between align-items-end mb-4 border-bottom border-secondary pb-3">
+        <div>
+            <h6 class="text-uppercase text-info fw-bold mb-1" style="letter-spacing: 2px;">
+                Administração
+            </h6>
+            <h1 class="fw-bold text-white mb-0">Editar Gênero</h1>
+        </div>
+
+      
+    </div>
+
+    <!-- Card -->
+    <div class="card bg-dark border-0 shadow-lg rounded-4 p-4">
+
+        <form asp-action="Edit" method="post">
+            @Html.AntiForgeryToken()
+
+            <input type="hidden" asp-for="Id" />
+
+            <partial name="_Form" />
+
+            <div class="mt-4 d-flex justify-content-end">
+                <button class="btn btn-success fw-bold shadow" type="submit">
+                    <i class="bi bi-save me-1"></i> Salvar Alterações
+                </button>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

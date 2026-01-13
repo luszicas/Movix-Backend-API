@@ -1,0 +1,252 @@
+{
+  "openapi": "3.0.4",
+  "info": {
+    "title": "Movix.Api",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/Classificacoes": {
+      "get": {
+        "tags": [
+          "Classificacoes"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Filmes": {
+      "get": {
+        "tags": [
+          "Filmes"
+        ],
+        "parameters": [
+          {
+            "name": "GeneroId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "ClassificacaoId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Ano",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Q",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "SortBy",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Desc",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "Page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FilmeDtoPagedResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FilmeDtoPagedResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FilmeDtoPagedResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Filmes/{id}": {
+      "get": {
+        "tags": [
+          "Filmes"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FilmeDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FilmeDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FilmeDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Generos": {
+      "get": {
+        "tags": [
+          "Generos"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/": {
+      "get": {
+        "tags": [
+          "Movix.Api"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "FilmeDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "titulo": {
+            "type": "string",
+            "nullable": true
+          },
+          "sinopse": {
+            "type": "string",
+            "nullable": true
+          },
+          "ano": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "imagemCapaUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "generoId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "generoNome": {
+            "type": "string",
+            "nullable": true
+          },
+          "classificacaoId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "classificacaoNome": {
+            "type": "string",
+            "nullable": true
+          },
+          "urlTrailer": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FilmeDtoPagedResult": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "total": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FilmeDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}

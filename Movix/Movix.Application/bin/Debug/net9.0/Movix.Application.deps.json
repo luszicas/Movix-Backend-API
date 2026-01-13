@@ -1,0 +1,48 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v9.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v9.0": {
+      "Movix.Application/1.0.0": {
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore.Tools": "10.0.0",
+          "Movix.Domain": "1.0.0"
+        },
+        "runtime": {
+          "Movix.Application.dll": {}
+        }
+      },
+      "Microsoft.EntityFrameworkCore.Tools/10.0.0": {},
+      "Movix.Domain/1.0.0": {
+        "runtime": {
+          "Movix.Domain.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Movix.Application/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Microsoft.EntityFrameworkCore.Tools/10.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Gx6AWCf1CsBHTbvVVWBYBKp6hrwZt0IgBigoBPaybwOBG2EFIfZc7NP2BoR6r56YuuikbPIzCuvQuFYNnX43+A==",
+      "path": "microsoft.entityframeworkcore.tools/10.0.0",
+      "hashPath": "microsoft.entityframeworkcore.tools.10.0.0.nupkg.sha512"
+    },
+    "Movix.Domain/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

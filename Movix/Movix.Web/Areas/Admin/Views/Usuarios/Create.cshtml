@@ -1,0 +1,186 @@
+﻿@* @using Microsoft.AspNetCore.Mvc.Rendering *@
+@* @model Movix.Web.Areas.Admin.Models.UsuarioCreateVm *@
+@* @{ *@
+@*     ViewData["Title"] = "Novo Usuário"; *@
+@*     var roles = (IEnumerable<string>)(ViewBag.AllRoles ?? Array.Empty<string>()); *@
+@* } *@
+
+@* <h1 class="mb-4">Novo Usuário</h1> *@
+
+@* <form asp-area="Admin" *@
+@*       asp-controller="Usuarios" *@
+@*       asp-action="Create" *@
+@*       method="post" *@
+@*       autocomplete="off"> *@
+@*     @* desabilita autofill no form *@ 
+@*     @Html.AntiForgeryToken() *@
+
+@*     @* ---- Campos “isca” para segurar o autofill dos navegadores ---- *@ 
+@*     <input type="text" *@
+@*            name="fake_user" *@
+@*            id="fake_user" *@
+@*            autocomplete="username" *@
+@*            tabindex="-1" *@
+@*            aria-hidden="true" *@
+@*            style="position:absolute;left:-10000px;top:-10000px;width:0;height:0;opacity:0;" /> *@
+@*     <input type="password" *@
+@*            name="fake_pass" *@
+@*            id="fake_pass" *@
+@*            autocomplete="current-password" *@
+@*            tabindex="-1" *@
+@*            aria-hidden="true" *@
+@*            style="position:absolute;left:-10000px;top:-10000px;width:0;height:0;opacity:0;" /> *@
+@*     @* ---------------------------------------------------------------- *@ 
+
+@*     <div class="mb-3"> *@
+@*         <label asp-for="Email" class="form-label"></label> *@
+@*         <input asp-for="Email" *@
+@*                class="form-control" *@
+@*                autocomplete="off" *@
+@*                autocapitalize="none" *@
+@*                spellcheck="false" /> *@
+@*         <span asp-validation-for="Email" class="text-danger"></span> *@
+@*     </div> *@
+
+@*     <div class="mb-3"> *@
+@*         <label asp-for="UserName" class="form-label">Username</label> *@
+@*         <input asp-for="UserName" *@
+@*                class="form-control" *@
+@*                autocomplete="off" *@
+@*                autocapitalize="none" *@
+@*                spellcheck="false" /> *@
+@*         <span asp-validation-for="UserName" class="text-danger"></span> *@
+@*     </div> *@
+
+@*     <div class="mb-3"> *@
+@*         <label asp-for="Password" class="form-label"></label> *@
+@*         <input asp-for="Password" *@
+@*                type="password" *@
+@*                class="form-control" *@
+@*                autocomplete="new-password" /> @* instrução explícita p/ senha nova *@ 
+@*         <span asp-validation-for="Password" class="text-danger"></span> *@
+@*     </div> *@
+
+@*     <div class="mb-4"> *@
+@*         <label for="Role" class="form-label">Perfil</label> *@
+@*         <select asp-for="Role" *@
+@*                 class="form-select" *@
+@*                 asp-items="@(new SelectList(roles))"> *@
+@*             <option value="">Selecione...</option> *@
+@*         </select> *@
+@*         <span asp-validation-for="Role" class="text-danger"></span> *@
+@*     </div> *@
+
+@*     <button type="submit" class="btn btn-success me-2">Salvar</button> *@
+@*     <a asp-area="Admin" asp-controller="Usuarios" asp-action="Index" class="btn btn-danger">Cancelar</a> *@
+@* </form> *@
+
+@* @section Scripts { *@
+@*     <partial name="_ValidationScriptsPartial" /> *@
+@* } *@
+
+
+
+
+@using Microsoft.AspNetCore.Mvc.Rendering
+@model Movix.Web.Areas.Admin.Models.UsuarioCreateVm
+
+@{
+    ViewData["Title"] = "Novo Usuário";
+    var roles = (IEnumerable<string>)(ViewBag.AllRoles ?? Array.Empty<string>());
+}
+
+<div class="container" style="padding-top: 140px;">
+
+    <!-- Cabeçalho -->
+    <div class="d-flex justify-content-between align-items-end mb-4 border-bottom border-secondary pb-3">
+        <div>
+            <h6 class="text-uppercase text-info fw-bold mb-1" style="letter-spacing: 2px;">
+                Administração
+            </h6>
+            <h1 class="fw-bold text-white mb-0">Novo Usuário</h1>
+        </div>
+
+        <a asp-area="Admin" asp-controller="Usuarios" asp-action="Index" class="btn btn-secondary shadow">
+            <i class="bi bi-arrow-left"></i> Voltar
+        </a>
+    </div>
+
+    <!-- Card -->
+    <div class="card bg-dark border-0 shadow-lg rounded-4 p-4">
+
+        <form asp-area="Admin"
+              asp-controller="Usuarios"
+              asp-action="Create"
+              method="post"
+              autocomplete="off">
+
+            @Html.AntiForgeryToken()
+
+            <!-- Anti-autofill Hack -->
+            <input type="text" name="fake_user" style="opacity:0;position:absolute;left:-9999px;" />
+            <input type="password" name="fake_pass" style="opacity:0;position:absolute;left:-9999px;" />
+
+            <!-- Email -->
+            <div class="mb-3">
+                <label asp-for="Email" class="form-label fw-semibold"></label>
+                <input asp-for="Email"
+                       class="form-control bg-black text-white border-secondary rounded-3"
+                       autocomplete="off"
+                       autocapitalize="none"
+                       spellcheck="false" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <!-- Username -->
+            <div class="mb-3">
+                <label asp-for="UserName" class="form-label fw-semibold">Username</label>
+                <input asp-for="UserName"
+                       class="form-control bg-black text-white border-secondary rounded-3"
+                       autocomplete="off"
+                       autocapitalize="none"
+                       spellcheck="false" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+
+            <!-- Senha -->
+            <div class="mb-3">
+                <label asp-for="Password" class="form-label fw-semibold"></label>
+                <input asp-for="Password"
+                       type="password"
+                       class="form-control bg-black text-white border-secondary rounded-3"
+                       autocomplete="new-password" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <!-- Perfil -->
+            <div class="mb-4">
+                <label asp-for="Role" class="form-label fw-semibold">Perfil</label>
+                <select asp-for="Role"
+                        class="form-select bg-black text-white border-secondary rounded-3"
+                        asp-items="@(new SelectList(roles))">
+                    <option value="">Selecione...</option>
+                </select>
+                <span asp-validation-for="Role" class="text-danger"></span>
+            </div>
+
+            <!-- Botões -->
+            <div class="d-flex justify-content-end">
+                <button type="submit" class="btn btn-success fw-bold shadow">
+                    <i class="bi bi-check-circle me-1"></i> Salvar
+                </button>
+
+                <a asp-area="Admin"
+                   asp-controller="Usuarios"
+                   asp-action="Index"
+                   class="btn btn-danger ms-2 fw-bold shadow">
+                    Cancelar
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

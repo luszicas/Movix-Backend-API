@@ -1,0 +1,125 @@
+﻿@model Movix.Web.Models.LoginVm
+@{
+    ViewData["Title"] = "Entrar";
+}
+
+<!-- VIDEO DE FUNDO FULLSCREEN -->
+<div class="video-bg">
+    <video autoplay muted loop playsinline id="bg-video" preload="auto">
+        <source src="~/img/video 1.mp4" type="video/mp4">
+    </video>
+</div>
+
+<!-- CONTEÚDO DA PÁGINA -->
+<div class="login-background d-flex justify-content-center align-items-center">
+
+    <div class="glass-card p-4 rounded-4 shadow-lg" style="width: 100%; max-width: 420px;">
+
+        <h2 class="text-center mb-4 fw-bold" style="letter-spacing: 1px; color: blue;">
+            Movix
+        </h2>
+
+        <h5 class="text-center mb-4 text-white-50">Entre na sua conta</h5>
+
+        <form asp-action="Login" method="post">
+
+            <div class="form-group mb-3">
+                <label asp-for="Email" class="form-label text-white-50"></label>
+                <input asp-for="Email"
+                       class="form-control rounded-3 bg-dark text-light border-secondary"
+                       placeholder="exemplo@movix.com" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Password" class="form-label text-white-50"></label>
+                <input asp-for="Password"
+                       class="form-control rounded-3 bg-dark text-light border-secondary"
+                       placeholder="••••••" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <p class="text-center mt-3">
+                Não tem uma conta?
+                <a asp-controller="Auth" asp-action="Registrar"
+                   class="text-decoration-none text-info fw-bold">
+                    Crie já
+                </a>
+            </p>
+
+
+
+            <button type="submit"
+                    class="btn btn-primary w-100 mt-2 rounded-3 fw-semibold shadow-sm">
+                Entrar
+            </button>
+
+        </form>
+
+        <hr class="border-secondary" />
+
+        <p class="text-center mb-0">
+            <a href="/" class="text-decoration-none text-white-50">← Voltar para o site</a>
+        </p>
+
+    </div>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+<style>
+    /* VIDEO FULLSCREEN EM ALTA QUALIDADE */
+    /* CONTAINER DO VÍDEO FULLSCREEN */
+    .video-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        z-index: -10;
+        background: black;
+    }
+
+    /* VÍDEO AJUSTADO PRA TELA INTEIRA SEM DISTORCER */
+    #bg-video {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        min-width: 100%;
+        min-height: 100%;
+        width: auto;
+        height: auto;
+        transform: translate(-50%, -50%);
+        object-fit: cover; /* o MELHOR para fullscreen */
+        filter: brightness(1.1) contrast(1.05) saturate(1.1);
+    }
+
+
+    .login-background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      /*   backdrop-filter: blur(2px); */
+        z-index: 10;
+    }
+
+    .glass-card {
+        background: rgba(255, 255, 255, 0.09);
+        border: 1px solid rgba(255, 255, 255, 0.20);
+        backdrop-filter: blur(14px);
+    }
+
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transition: 0.3s;
+        }
+</style>

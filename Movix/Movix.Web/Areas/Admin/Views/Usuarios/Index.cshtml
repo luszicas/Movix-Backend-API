@@ -1,0 +1,349 @@
+﻿@* @model Movix.Web.Areas.Admin.Models.PagedUsuario *@
+@* @using Movix.Web.Areas.Admin.Models *@
+@* @{ *@
+@*     ViewData["Title"] = "Gestão — Usuários"; *@
+@*     var f = (UsuarioListFilter)ViewBag.Filter; *@
+@*     var totalPages = Math.Max(1, (int)Math.Ceiling((double)Model.Total / Math.Max(1, Model.PageSize))); *@
+@*     var allRoles = (IEnumerable<string>)(ViewBag.Roles ?? Array.Empty<string>()); *@
+@*     bool isAdmin = User.IsInRole("Admin") || User.IsInRole("ADMIN") || User.IsInRole("Administrador"); *@
+@* } *@
+@* <h2 class="mb-3 mt-4">Gestão — Usuários</h2> *@
+
+@* @if (TempData["ok"] is string ok) *@
+@* { *@
+@*     <div class="alert alert-success">@ok</div> *@
+@* } *@
+
+@* <form method="get" class="row gy-2 gx-2 mb-3"> *@
+@*     <div class="col-md-3"> *@
+@*         <label class="form-label">Busca</label> *@
+@*         <input class="form-control" name="Q" value="@(f.Q ?? "")" placeholder="email ou username" /> *@
+@*     </div> *@
+@*     <div class="col-md-3"> *@
+@*         <label class="form-label">Perfil</label> *@
+@*         <select class="form-select" name="Role"> *@
+@*             <option value="">Todos</option> *@
+@*             @foreach (var r in allRoles) *@
+@*             { *@
+@*                 if (string.Equals(f.Role, r, StringComparison.OrdinalIgnoreCase)) *@
+@*                 { *@
+@*                     <option value="@r" selected>@r</option> *@
+@*                 } *@
+@*                 else *@
+@*                 { *@
+@*                     <option value="@r">@r</option> *@
+@*                 } *@
+@*             } *@
+@*         </select> *@
+@*     </div> *@
+@*     <div class="col-md-2"> *@
+@*         <label class="form-label">Ativo?</label> *@
+@*         <select class="form-select" name="Ativo"> *@
+@*             <option value="">Todos</option> *@
+@*             @if (f.Ativo == true) *@
+@*             { *@
+@*                 <option value="true" selected>Sim</option> *@
+@*             } *@
+@*             else *@
+@*             { *@
+@*                 <option value="true">Sim</option> *@
+@*             } *@
+@*             @if (f.Ativo == false) *@
+@*             { *@
+@*                 <option value="false" selected>Não</option> *@
+@*             } *@
+@*             else *@
+@*             { *@
+@*                 <option value="false">Não</option> *@
+@*             } *@
+@*         </select> *@
+@*     </div> *@
+@*     <div class="col-12"> *@
+@*         <input type="hidden" name="Page" value="1" /> *@
+@*         <input type="hidden" name="PageSize" value="@f.PageSize" /> *@
+@*         <button class="btn btn-primary">Aplicar</button> *@
+@*         <a class="btn btn-danger ms-2" href="@Url.Action("Index")">Limpar</a> *@
+@*         @if (isAdmin) *@
+@*         { *@
+@*             <a class="btn btn-success float-end" asp-action="Create">Novo usuário</a> *@
+@*         } *@
+@*     </div> *@
+@* </form> *@
+
+@* <div class="table-responsive"> *@
+@*     <table class="table table-striped align-middle"> *@
+@*         <thead><tr><th>Email</th><th>Username</th><th>Status</th><th>Perfis</th><th class="text-end">Ações</th></tr></thead> *@
+@*         <tbody> *@
+@*             @foreach (var u in Model.Items) *@
+@*             { *@
+@*                 <tr> *@
+@*                     <td>@u.Email</td> *@
+@*                     <td>@u.UserName</td> *@
+@*                     <td> *@
+@*                         @if (u.IsActive) *@
+@*                         { *@
+@*                             <span class="badge text-bg-success">Ativo</span> *@
+@*                         } *@
+@*                         else *@
+@*                         { *@
+
+@*                             <span class="badge text-bg-secondary">Inativo</span> *@
+@*                         } *@
+@*                     </td> *@
+@*                     <td> *@
+@*                         @foreach (var r in u.Roles) *@
+@*                         { *@
+@*                             <span class="badge text-bg-info me-1">@r</span> *@
+@*                         } *@
+@*                         @if (!u.Roles.Any()) *@
+@*                         { *@
+@*                             <span class="text-secondary">—</span> *@
+@*                         } *@
+@*                     </td> *@
+@*                     <td class="text-end"> *@
+
+@*                         <a class="btn btn-sm btn-outline-primary" asp-action="Edit" asp-route-id="@u.Id">Editar</a> *@
+@*                         @if (User.IsInRole("Admin") || User.IsInRole("ADMIN") || User.IsInRole("Administrador")) *@
+@*                         { *@
+@*                             @if (u.IsActive) *@
+@*                             { *@
+
+@*                                 <form class="d-inline ms-1" asp-action="Desativar" method="post"> *@
+@*                                     @Html.AntiForgeryToken() *@
+@*                                     <input type="hidden" name="id" value="@u.Id" /> *@
+@*                                     <button class="btn btn-sm btn-outline-danger" type="submit">Desativar</button> *@
+@*                                 </form> *@
+@*                             } *@
+@*                             else *@
+@*                             { *@
+@*                                 <form class="d-inline ms-1" asp-action="Reativar" method="post"> *@
+@*                                     @Html.AntiForgeryToken() *@
+@*                                     <input type="hidden" name="id" value="@u.Id" /> *@
+@*                                     <button class="btn btn-sm btn-outline-success" type="submit">Reativar</button> *@
+@*                                 </form> *@
+@*                             } *@
+@*                         } *@
+@*                     </td> *@
+@*                 </tr> *@
+@*             } *@
+@*             @if (!Model.Items.Any()) *@
+@*             { *@
+@*                 <tr><td colspan="5" class="text-secondary">Nenhum usuário encontrado.</td></tr> *@
+@*             } *@
+@*         </tbody> *@
+@*     </table> *@
+@* </div> *@
+
+
+
+
+@model Movix.Web.Areas.Admin.Models.PagedUsuario
+@using Movix.Web.Areas.Admin.Models
+
+@{
+    ViewData["Title"] = "Usuários";
+
+    var f = (UsuarioListFilter)ViewBag.Filter;
+    var totalPages = Math.Max(1, (int)Math.Ceiling((double)Model.Total / Math.Max(1, Model.PageSize)));
+    var allRoles = (IEnumerable<string>)(ViewBag.Roles ?? Array.Empty<string>());
+    bool isAdmin = User.IsInRole("Admin") || User.IsInRole("ADMIN") || User.IsInRole("Administrador");
+}
+
+<div class="container pb-5" style="padding-top: 140px;">
+
+    <!-- Título + Novo usuário -->
+    <div class="d-flex justify-content-between align-items-end mb-4 border-bottom border-secondary pb-3">
+        <div>
+            <h6 class="text-uppercase text-info fw-bold mb-1" style="letter-spacing: 2px;">
+                Administração
+            </h6>
+            <h1 class="fw-bold text-white mb-0">Usuários</h1>
+        </div>
+
+        @if (isAdmin)
+        {
+            <a asp-action="Create" class="btn btn-info shadow-lg text-dark fw-bold">
+                <i class="bi bi-person-plus-fill me-2"></i> Novo Usuário
+            </a>
+        }
+    </div>
+
+    <!-- Alertas -->
+    @if (TempData["ok"] is string ok)
+    {
+        <div class="alert alert-success fw-bold shadow-sm">
+            <i class="bi bi-check-circle-fill me-2"></i> @ok
+        </div>
+    }
+
+    <!-- FILTROS -->
+    <div class="card bg-dark border-0 shadow-lg rounded-4 p-4 mb-4">
+
+        <form method="get" class="row gy-3 gx-3">
+
+            <!-- Busca -->
+            <div class="col-md-4">
+                <label class="form-label text-info fw-semibold">Busca</label>
+                <input class="form-control bg-black text-white border-secondary"
+                       name="Q"
+                       value="@(f.Q ?? "")"
+                       placeholder="Email ou username" />
+            </div>
+
+            <!-- Perfil -->
+            <div class="col-md-3">
+                <label class="form-label text-info fw-semibold">Perfil</label>
+                <select class="form-select bg-black text-white border-secondary" name="Role">
+                    <option value="">Todos</option>
+                    @foreach (var r in allRoles)
+                    {
+                        <option value="@r" selected="@(f.Role == r ? "selected" : null)">@r</option>
+                    }
+                </select>
+            </div>
+
+            <!-- Ativo -->
+            <div class="col-md-3">
+                <label class="form-label text-info fw-semibold">Ativo?</label>
+                <select class="form-select bg-black text-white border-secondary" name="Ativo">
+                    <option value="">Todos</option>
+                    <option value="true" selected="@(f.Ativo == true ? "selected" : null)">Sim</option>
+                    <option value="false" selected="@(f.Ativo == false ? "selected" : null)">Não</option>
+                </select>
+            </div>
+
+            <div class="col-12 mt-2">
+                <input type="hidden" name="Page" value="1" />
+                <input type="hidden" name="PageSize" value="@f.PageSize" />
+
+                <button class="btn btn-primary shadow fw-bold">
+                    <i class="bi bi-funnel-fill me-1"></i> Aplicar
+                </button>
+
+                <a class="btn btn-danger ms-2 shadow fw-bold" href="@Url.Action("Index")">
+                    <i class="bi bi-x-lg me-1"></i> Limpar
+                </a>
+            </div>
+
+        </form>
+    </div>
+
+    <!-- TABELA -->
+    <div class="card border-0 shadow-lg overflow-hidden bg-dark rounded-4">
+        <div class="card-body p-0">
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0 text-white">
+
+                    <thead class="bg-black text-info">
+                        <tr>
+                            <th class="ps-4 py-3 small text-uppercase fw-bold border-0">Email</th>
+                            <th class="py-3 small text-uppercase fw-bold border-0">Username</th>
+                            <th class="py-3 small text-uppercase fw-bold border-0">Status</th>
+                            <th class="py-3 small text-uppercase fw-bold border-0">Perfis</th>
+                            <th class="pe-4 py-3 text-end small text-uppercase fw-bold border-0">Ações</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var u in Model.Items)
+                        {
+                            <tr>
+
+                                <td class="ps-4 py-3 fw-bold">@u.Email</td>
+                                <td class="fw-semibold">@u.UserName</td>
+
+                                <!-- Status -->
+                                <td>
+                                    @if (u.IsActive)
+                                    {
+                                        <span class="badge bg-success px-3 py-2 shadow-sm">Ativo</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-secondary px-3 py-2 shadow-sm">Inativo</span>
+                                    }
+                                </td>
+
+                                <!-- Perfis -->
+                                <td>
+                                    @if (!u.Roles.Any())
+                                    {
+                                        <span class="text-muted">—</span>
+                                    }
+                                    else
+                                    {
+                                        foreach (var r in u.Roles)
+                                        {
+                                            <span class="badge bg-info text-dark px-3 py-2 rounded-pill shadow-sm me-1">@r</span>
+                                        }
+                                    }
+                                </td>
+
+                                <!-- Ações -->
+                                <td class="pe-4 text-end">
+
+                                    <div class="btn-group shadow-sm">
+
+                                        <a asp-action="Edit"
+                                           asp-route-id="@u.Id"
+                                           class="btn btn-sm btn-outline-primary"
+                                           title="Editar">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a>
+
+                                        @if (isAdmin)
+                                        {
+                                            @if (u.IsActive)
+                                            {
+                                                <form class="d-inline" asp-action="Desativar" method="post">
+                                                    @Html.AntiForgeryToken()
+                                                    <input type="hidden" name="id" value="@u.Id" />
+                                                    <button class="btn btn-sm btn-outline-danger" title="Desativar">
+                                                        <i class="bi bi-person-x-fill"></i>
+                                                    </button>
+                                                </form>
+                                            }
+                                            else
+                                            {
+                                                <form class="d-inline" asp-action="Reativar" method="post">
+                                                    @Html.AntiForgeryToken()
+                                                    <input type="hidden" name="id" value="@u.Id" />
+                                                    <button class="btn btn-sm btn-outline-success" title="Reativar">
+                                                        <i class="bi bi-person-check-fill"></i>
+                                                    </button>
+                                                </form>
+                                            }
+                                        }
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+                        }
+
+                        @if (!Model.Items.Any())
+                        {
+                            <tr>
+                                <td colspan="5" class="text-center text-muted py-4">
+                                    <i class="bi bi-emoji-frown fs-4 me-2"></i> Nenhum usuário encontrado.
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Rodapé -->
+            <div class="card-footer bg-black border-0 py-3 ps-4 d-flex justify-content-between align-items-center">
+                <small class="text-muted fw-bold">
+                    Total: @Model.Total usuários
+                </small>
+            </div>
+
+        </div>
+    </div>
+
+</div>

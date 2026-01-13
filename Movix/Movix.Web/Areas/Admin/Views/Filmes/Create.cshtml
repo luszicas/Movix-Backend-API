@@ -1,0 +1,53 @@
+﻿@* @model Movix.Web.Areas.Admin.Models.FilmeEditVm *@
+
+@* @{ *@
+@*     ViewData["Title"] = "Novo Filme"; *@
+@* } *@
+
+@* <h2>@ViewData["Title"]</h2> *@
+
+@* <form asp-action="Create" enctype="multipart/form-data" method="post"> *@
+@*     <partial name="_Form" model="Model" /> *@
+@*     <button type="submit" class="btn btn-success">Salvar</button> *@
+@*     <a asp-action="Index" class="btn btn-danger">Cancelar</a> *@
+@* </form> *@
+
+
+
+
+
+@model Movix.Web.Areas.Admin.Models.FilmeEditVm
+
+@{
+    ViewData["Title"] = "Novo Filme";
+}
+
+<div class="container" style="padding-top: 120px; max-width: 850px;">
+
+    <div class="card bg-dark text-white border-0 shadow-lg rounded-4 mb-4">
+        <div class="card-body px-5 py-4">
+
+            <h6 class="text-info text-uppercase fw-bold small mb-1" style="letter-spacing: 2px;">
+                Administração
+            </h6>
+
+            <h1 class="fw-bold mb-4">@ViewData["Title"]</h1>
+
+            <form asp-action="Create" enctype="multipart/form-data" method="post">
+                <partial name="_Form" model="Model" />
+
+                <div class="mt-4 d-flex gap-3">
+                    <button type="submit" class="btn btn-info text-dark fw-bold px-4">
+                        <i class="bi bi-check2-circle me-1"></i> Salvar
+                    </button>
+
+                    <a asp-action="Index" class="btn btn-outline-danger px-4">
+                        <i class="bi bi-x-circle me-1"></i> Cancelar
+                    </a>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+</div>

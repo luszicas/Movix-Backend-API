@@ -1,0 +1,178 @@
+﻿
+@* refatorado fase 08 *@
+
+
+@* @model Movix.Web.Areas.Admin.Models.FilmeEditVm *@
+@* @{ *@
+@*     var generos = (IEnumerable<dynamic>)(ViewBag.Generos ?? Array.Empty<object>()); *@
+@*     var classificacoes = (IEnumerable<dynamic>)(ViewBag.Classificacoes ?? Array.Empty<object>()); *@
+@* } *@
+
+@* <div class="mb-3"> *@
+@*     <label asp-for="Titulo" class="form-label"></label> *@
+@*     <input asp-for="Titulo" class="form-control" /> *@
+@*     <span asp-validation-for="Titulo" class="text-danger"></span> *@
+@* </div> *@
+
+@* <div class="row g-3"> *@
+@*     <div class="col-md-4"> *@
+@*         <label asp-for="Ano" class="form-label"></label> *@
+@*         <input asp-for="Ano" class="form-control" /> *@
+@*         <span asp-validation-for="Ano" class="text-danger"></span> *@
+@*     </div> *@
+@*     <div class="col-md-4"> *@
+@*         <label asp-for="GeneroId" class="form-label">Gênero</label> *@
+@*         <select asp-for="GeneroId" class="form-select" *@
+@*                 asp-items="@(new SelectList(generos, "Id", "Nome", Model.GeneroId))"> *@
+@*             <option value="">Selecione...</option> *@
+@*         </select> *@
+@*         <span asp-validation-for="GeneroId" class="text-danger"></span> *@
+@*     </div> *@
+@*     <div class="col-md-4"> *@
+@*         <label asp-for="ClassificacaoId" class="form-label">Classificação</label> *@
+@*         <select asp-for="ClassificacaoId" class="form-select" *@
+@*                 asp-items="@(new SelectList(classificacoes, "Id", "Nome", Model.ClassificacaoId))"> *@
+@*             <option value="">Selecione...</option> *@
+@*         </select> *@
+@*         <span asp-validation-for="ClassificacaoId" class="text-danger"></span> *@
+@*     </div> *@
+@* </div> *@
+
+@* <div class="mb-3 mt-3"> *@
+@*     <label asp-for="Sinopse" class="form-label"></label> *@
+@*     <textarea asp-for="Sinopse" rows="4" class="form-control"></textarea> *@
+@*     <span asp-validation-for="Sinopse" class="text-danger"></span> *@
+@* </div> *@
+
+@* <div class="mb-3"> *@
+@*     <label asp-for="ImagemCapaUrl" class="form-label">URL da capa (opcional)</label> *@
+@*     <input asp-for="ImagemCapaUrl" class="form-control" placeholder="https://..." /> *@
+@*     <div class="form-text">Se enviar um arquivo abaixo, ele substitui esta URL.</div> *@
+@*     <span asp-validation-for="ImagemCapaUrl" class="text-danger"></span> *@
+@* </div> *@
+
+@* <div class="mb-3"> *@
+@*     <label class="form-label">Enviar capa (opcional)</label> *@
+@*     <input type="file" name="capaArquivo" accept=".jpg,.jpeg,.png,.webp" class="form-control" /> *@
+@*     <div class="form-text">Máx. 2 MB — formatos: JPG, PNG, WEBP.</div> *@
+@* </div> *@
+
+@* @if (!string.IsNullOrWhiteSpace(Model?.ImagemCapaUrl)) *@
+@* { *@
+@*     <div class="mb-3"> *@
+@*         <label class="form-label">Preview</label><br /> *@
+@*         <img src="@Model.ImagemCapaUrl" alt="Capa" style="max-width:220px;border-radius:10px" /> *@
+@*     </div> *@
+@* } *@
+
+@* <!-- 🆕 Campo de URL do trailer --> *@
+@* <div class="mb-3"> *@
+@*     <label asp-for="UrlTrailer" class="form-label">URL do Trailer</label> *@
+@*     <input asp-for="UrlTrailer" class="form-control" placeholder="https://www.youtube.com/watch?v=..." /> *@
+@*     <div class="form-text">Cole o link do trailer (YouTube, Vimeo, etc.)</div> *@
+@*     <span asp-validation-for="UrlTrailer" class="text-danger"></span> *@
+@* </div> *@
+
+
+
+
+
+
+
+
+
+
+
+@model Movix.Web.Areas.Admin.Models.FilmeEditVm
+
+@{
+    var generos = (IEnumerable<dynamic>)(ViewBag.Generos ?? Array.Empty<object>());
+    var classificacoes = (IEnumerable<dynamic>)(ViewBag.Classificacoes ?? Array.Empty<object>());
+}
+
+<!-- CARD DO FORMULÁRIO -->
+<div class="card bg-black border border-secondary rounded-4 shadow-sm mb-4">
+    <div class="card-body px-4 pt-4 pb-2">
+
+        <!-- Título -->
+        <div class="mb-3">
+            <label asp-for="Titulo" class="form-label fw-semibold text-info"></label>
+            <input asp-for="Titulo" class="form-control bg-dark text-white border-secondary" />
+            <span asp-validation-for="Titulo" class="text-danger"></span>
+        </div>
+
+        <!-- Linha Ano / Gênero / Classificação -->
+        <div class="row g-3">
+            <div class="col-md-4">
+                <label asp-for="Ano" class="form-label fw-semibold text-info"></label>
+                <input asp-for="Ano" class="form-control bg-dark text-white border-secondary" />
+                <span asp-validation-for="Ano" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-4">
+                <label asp-for="GeneroId" class="form-label fw-semibold text-info">Gênero</label>
+                <select asp-for="GeneroId" class="form-select bg-dark text-white border-secondary"
+                        asp-items="@(new SelectList(generos, "Id", "Nome", Model.GeneroId))">
+                    <option value="">Selecione...</option>
+                </select>
+                <span asp-validation-for="GeneroId" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-4">
+                <label asp-for="ClassificacaoId" class="form-label fw-semibold text-info">Classificação</label>
+                <select asp-for="ClassificacaoId" class="form-select bg-dark text-white border-secondary"
+                        asp-items="@(new SelectList(classificacoes, "Id", "Nome", Model.ClassificacaoId))">
+                    <option value="">Selecione...</option>
+                </select>
+                <span asp-validation-for="ClassificacaoId" class="text-danger"></span>
+            </div>
+        </div>
+
+        <!-- Sinopse -->
+        <div class="mb-3 mt-4">
+            <label asp-for="Sinopse" class="form-label fw-semibold text-info"></label>
+            <textarea asp-for="Sinopse" rows="4" class="form-control bg-dark text-white border-secondary"></textarea>
+            <span asp-validation-for="Sinopse" class="text-danger"></span>
+        </div>
+
+        <!-- URL da capa -->
+        <div class="mb-3">
+            <label asp-for="ImagemCapaUrl" class="form-label fw-semibold text-info">URL da capa</label>
+            <input asp-for="ImagemCapaUrl" class="form-control bg-dark text-white border-secondary"
+                   placeholder="https://..." />
+            <div class="form-text text-secondary">Se enviar arquivo abaixo, ele substitui esta URL.</div>
+            <span asp-validation-for="ImagemCapaUrl" class="text-danger"></span>
+        </div>
+
+        <!-- Upload da capa -->
+        <div class="mb-3">
+            <label class="form-label fw-semibold text-info">Enviar capa</label>
+            <input type="file" name="capaArquivo" accept=".jpg,.jpeg,.png,.webp"
+                   class="form-control bg-dark text-white border-secondary" />
+            <div class="form-text text-secondary">Máximo 2 MB — JPG, PNG, WEBP.</div>
+        </div>
+
+        <!-- Preview da capa -->
+        @if (!string.IsNullOrWhiteSpace(Model?.ImagemCapaUrl))
+        {
+            <div class="mb-3 text-center">
+                <label class="form-label fw-semibold text-info">Preview</label>
+                <div class="mt-2">
+                    <img src="@Model.ImagemCapaUrl" alt="Capa"
+                         class="shadow rounded-4"
+                         style="max-width: 220px; border: 2px solid rgba(255,255,255,0.2);" />
+                </div>
+            </div>
+        }
+
+        <!-- URL do Trailer -->
+        <div class="mb-3">
+            <label asp-for="UrlTrailer" class="form-label fw-semibold text-info">URL do Trailer</label>
+            <input asp-for="UrlTrailer" class="form-control bg-dark text-white border-secondary"
+                   placeholder="https://www.youtube.com/watch?v=..." />
+            <div class="form-text text-secondary">Cole o link do trailer (YouTube, Vimeo, etc.).</div>
+            <span asp-validation-for="UrlTrailer" class="text-danger"></span>
+        </div>
+
+    </div>
+</div>

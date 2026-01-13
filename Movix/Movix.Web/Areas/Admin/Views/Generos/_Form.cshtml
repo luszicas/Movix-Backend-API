@@ -1,0 +1,18 @@
+﻿@* @model Movix.Web.Areas.Admin.Models.GeneroEditVm *@
+@* <div class="mb-3"> *@
+@*     <label class="form-label">Nome</label> *@
+@*     <input asp-for="Nome" class="form-control" /> *@
+@*     <span asp-validation-for="Nome" class="text-danger"></span> *@
+@* </div> *@
+
+
+@model Movix.Web.Areas.Admin.Models.GeneroEditVm
+
+<div class="mb-3">
+    <label class="form-label text-info fw-semibold">Nome do Gênero</label>
+
+    <input asp-for="Nome"
+           class="form-control bg-dark text-white border-secondary rounded-3 shadow-sm" />
+
+    <span asp-validation-for="Nome" class="text-danger"></span>
+</div>

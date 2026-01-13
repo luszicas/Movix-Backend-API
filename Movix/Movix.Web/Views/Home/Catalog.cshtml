@@ -1,0 +1,178 @@
+﻿@model Movix.Web.Models.CatalogPageVm
+@{
+    var f = Model.Filter;               // Atalho para filtros atuais (evita repetir Model.Filter).
+    var result = Model.PageResult!;     // Resultado paginado (não-nulo aqui).
+}
+
+<h2 class="mb-3">Catálogo</h2>
+
+@* Form de filtros via GET: URL compartilhável, suporta navegação/back *@
+<form method="get" class="row gy-2 gx-2 align-items-end mb-3">
+    @* Ao alterar qualquer filtro, volta para a página 1 *@
+    <input type="hidden" name="Page" value="1" />
+
+    <!-- Botões de gênero (âncora usada pelo menu: /Home/Catalog#genres) -->
+    <div class="col-12" id="genres">
+        <div class="d-flex flex-wrap gap-2 mb-2">
+            @foreach (var g in Model.Generos)
+            {
+                var active = f.GeneroId == g.Id ? "active" : ""; // Destaca o gênero aplicado.
+                <button type="submit" name="GeneroId" value="@g.Id"
+                        class="btn btn-sm btn-outline-primary genre-btn @active">
+                    @g.Nome
+                </button>
+            }
+            <a class="btn btn-sm btn-secondary" href="/Home/Catalog">Limpar</a> @* Reseta filtros *@
+        </div>
+    </div>
+
+    <div class="col-sm-3">
+        <label class="form-label">Classificação</label>
+        <select name="ClassificacaoId" class="form-select">
+            <option value="">Todas</option>
+            @foreach (var c in Model.Classificacoes)
+            {
+                if (f.ClassificacaoId == c.Id)
+                {
+                    <option value="@c.Id" selected>@c.Nome</option>
+                }
+                else
+                {
+                    <option value="@c.Id">@c.Nome</option>
+                }
+            }
+        </select>
+    </div>
+
+    <div class="col-sm-2">
+        <label class="form-label">Ano</label>
+        <input type="number" name="Ano" class="form-control" value="@(f.Ano?.ToString() ?? "")" />
+    </div>
+
+    <div class="col-sm-4">
+        <label class="form-label">Busca</label>
+        <input type="text" name="Q" class="form-control" value="@f.Q" placeholder="título ou sinopse..." />
+    </div>
+
+    <div class="col-sm-2">
+        <label class="form-label">Ordenar</label>
+        <select name="SortBy" class="form-select">
+            @* Mantém alinhado com os valores aceitos no backend: CreatedAt | Titulo | Ano *@
+            @if (f.SortBy == "CreatedAt")
+            {
+                <option value="CreatedAt" selected>Recentes</option>
+            }
+            else
+            {
+                <option value="CreatedAt">Recentes</option>
+            }
+            @if (f.SortBy == "Titulo")
+            {
+                <option value="Titulo" selected>Título</option>
+            }
+            else
+            {
+                <option value="Titulo">Título</option>
+            }
+            @if (f.SortBy == "Ano")
+            {
+                <option value="Ano" selected>Ano</option>
+            }
+            else
+            {
+                <option value="Ano">Ano</option>
+            }
+        </select>
+    </div>
+
+    <div class="col-sm-1">
+        <label class="form-label">Desc</label><br />
+        @* Checkbox só envia quando marcado; aqui value=true indica descendente *@
+        @if (f.Desc)
+        {
+            <input type="checkbox" name="Desc" class="form-check-input" value="true" checked />
+        }
+        else
+        {
+            <input type="checkbox" name="Desc" class="form-check-input" value="true" />
+        }
+    </div>
+
+    <div class="col-sm-2">
+        <label class="form-label">Itens/página</label>
+        <select name="PageSize" class="form-select">
+            @foreach (var s in new[] { 12, 24, 36, 48 })
+            {
+                if (f.PageSize == s)
+                {
+                    <option value="@s" selected>@s</option>
+                }
+                else
+                {
+                    <option value="@s">@s</option>
+                }
+            }
+        </select>
+    </div>
+
+    <div class="col-sm-12">
+        <button type="submit" class="btn btn-primary">Aplicar filtros</button>
+    </div>
+</form>
+
+@* Grid responsivo de cards *@
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
+    @foreach (var m in result.Items)
+    {
+        <div class="col">
+            <div class="card h-100 card-movie">
+                <img class="card-img-top" src="@(m.ImagemCapaUrl ?? "https://picsum.photos/seed/fallback/400/600")" alt="@m.Titulo" />
+                <div class="card-body">
+                    <h5 class="card-title">@m.Titulo</h5>
+                    <p class="card-text small text-secondary mb-1">@m.GeneroNome · @m.ClassificacaoNome · @m.Ano</p>
+                    <p class="card-text small">@m.Sinopse</p> @* Pode aplicar clamp via CSS para truncar *@
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@{
+    var totalPages = Math.Max(1, (int)Math.Ceiling((double)result.Total / Math.Max(1, result.PageSize))); // Cálculo defensivo
+}
+
+@* Paginação preservando filtros via Url.Action *@
+<nav class="mt-4" aria-label="Paginação">
+    <ul class="pagination">
+        <li class="page-item @(f.Page<=1 ? "disabled" : "")">
+            <a class="page-link" href="@Url.Action("Catalog", new {
+                GeneroId=f.GeneroId, ClassificacaoId=f.ClassificacaoId, Ano=f.Ano, Q=f.Q,
+                SortBy=f.SortBy, Desc=f.Desc, Page=1, PageSize=f.PageSize })">&laquo;</a>
+        </li>
+
+        <li class="page-item @(f.Page<=1 ? "disabled" : "")">
+            <a class="page-link" href="@Url.Action("Catalog", new {
+                GeneroId=f.GeneroId, ClassificacaoId=f.ClassificacaoId, Ano=f.Ano, Q=f.Q,
+                SortBy=f.SortBy, Desc=f.Desc, Page=f.Page-1, PageSize=f.PageSize })">Anterior</a>
+        </li>
+
+        <li class="page-item disabled">
+            <span class="page-link">
+                Página @f.Page de @totalPages
+                <span class="badge text-bg-secondary ms-2">total: @result.Total</span>
+            </span>
+        </li>
+
+        <li class="page-item @(f.Page>=totalPages ? "disabled" : "")">
+            <a class="page-link" href="@Url.Action("Catalog", new {
+                GeneroId=f.GeneroId, ClassificacaoId=f.ClassificacaoId, Ano=f.Ano, Q=f.Q,
+                SortBy=f.SortBy, Desc=f.Desc, Page=f.Page+1, PageSize=f.PageSize })">Próxima</a>
+        </li>
+
+        <li class="page-item @(f.Page>=totalPages ? "disabled" : "")">
+            <a class="page-link" href="@Url.Action("Catalog", new {
+                GeneroId=f.GeneroId, ClassificacaoId=f.ClassificacaoId, Ano=f.Ano, Q=f.Q,
+                SortBy=f.SortBy, Desc=f.Desc, Page=totalPages, PageSize=f.PageSize })">&raquo;</a>
+        </li>
+    </ul>
+</nav>

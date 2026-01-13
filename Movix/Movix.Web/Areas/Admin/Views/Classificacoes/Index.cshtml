@@ -1,0 +1,205 @@
+﻿@* @model Movix.Web.Areas.Admin.Models.PagedClassificacao *@
+@* @using Movix.Web.Areas.Admin.Models *@
+@* @{ *@
+@*     ViewData["Title"] = "Gestão — Classificações"; *@
+@*     var f = (ClassificacaoListFilter)ViewBag.Filter; *@
+@*     var totalPages = Math.Max(1, (int)Math.Ceiling((double)Model.Total / Math.Max(1, Model.PageSize))); *@
+@* } *@
+@* <h2 class="mb-3 mt-5">Gestão — Classificações</h2> *@
+
+@* @if (TempData["ok"] is string ok) *@
+@* { *@
+@*     <div class="alert alert-success">@ok</div> *@
+@* } *@
+@* @if (TempData["error"] is string err) *@
+@* { *@
+@*     <div class="alert alert-danger">@err</div> *@
+@* } *@
+
+
+@* <form method="get" class="row gy-2 gx-2 mb-3"> *@
+@*     <div class="col-md-3"> *@
+@*         <label class="form-label">Busca</label> *@
+@*         <input class="form-control" name="Q" value="@(f.Q ?? "")" placeholder="nome da classificação" /> *@
+@*     </div> *@
+@*     <div class="col-12"> *@
+@*         <input type="hidden" name="Page" value="1" /> *@
+@*         <input type="hidden" name="PageSize" value="@f.PageSize" /> *@
+@*         <button class="btn btn-primary">Aplicar</button> *@
+@*         <a class="btn btn-danger ms-2" href="@Url.Action("Index")">Limpar</a> *@
+@*         <a class="btn btn-success float-end" asp-action="Create">Nova classificação</a> *@
+@*     </div> *@
+@* </form> *@
+
+@* <div class="table-responsive"> *@
+@*     <table class="table table-striped align-middle"> *@
+@*         <thead><tr><th>Nome</th><th class="text-end">Ações</th></tr></thead> *@
+@*         <tbody> *@
+@*             @foreach (var r in Model.Items) *@
+@*             { *@
+@*                 <tr> *@
+@*                     <td>@r.Nome</td> *@
+@*                     <td class="text-end"> *@
+@*                         <a class="btn btn-sm btn-outline-primary" asp-action="Edit" asp-route-id="@r.Id">Editar</a> *@
+@*                         @if (User.IsInRole("Admin") || User.IsInRole("ADMIN") || User.IsInRole("Administrador")) *@
+@*                         { *@
+@*                             <a class="btn btn-sm btn-outline-danger ms-1" asp-action="Delete" asp-route-id="@r.Id">Excluir</a> *@
+@*                         } *@
+@*                     </td> *@
+@*                 </tr> *@
+@*             } *@
+@*             @if (!Model.Items.Any()) *@
+@*             { *@
+@*                 <tr><td colspan="2" class="text-secondary">Nenhuma classificação encontrada.</td></tr> *@
+@*             } *@
+@*         </tbody> *@
+@*     </table> *@
+@* </div> *@
+
+@* <nav aria-label="Paginação"> *@
+@*     <ul class="pagination"> *@
+@*         <li class="page-item @(f.Page <= 1 ? "disabled" : "")"> *@
+@*             <a class="page-link" href="@Url.Action("Index", new { f.Q, Page = 1, f.PageSize })">&laquo;</a> *@
+@*         </li> *@
+@*         <li class="page-item @(f.Page <= 1 ? "disabled" : "")"> *@
+@*             <a class="page-link" href="@Url.Action("Index", new { f.Q, Page = f.Page - 1, f.PageSize })">Anterior</a> *@
+@*         </li> *@
+@*         <li class="page-item disabled"> *@
+@*             <span class="page-link">Página @f.Page de @totalPages <span class="badge text-bg-secondary ms-2">total: @Model.Total</span></span> *@
+@*         </li> *@
+@*         <li class="page-item @(f.Page >= totalPages ? "disabled" : "")"> *@
+@*             <a class="page-link" href="@Url.Action("Index", new { f.Q, Page = f.Page + 1, f.PageSize })">Próxima</a> *@
+@*         </li> *@
+@*         <li class="page-item @(f.Page >= totalPages ? "disabled" : "")"> *@
+@*             <a class="page-link" href="@Url.Action("Index", new { f.Q, Page = totalPages, f.PageSize })">&raquo;</a> *@
+@*         </li> *@
+@*     </ul> *@
+@* </nav> *@
+
+
+
+
+
+
+
+
+@model Movix.Web.Areas.Admin.Models.PagedClassificacao
+@using Movix.Web.Areas.Admin.Models
+
+@{
+    ViewData["Title"] = "Classificações";
+    var f = (ClassificacaoListFilter)ViewBag.Filter;
+    var totalPages = Math.Max(1, (int)Math.Ceiling((double)Model.Total / Math.Max(1, Model.PageSize)));
+}
+
+<div class="container pb-5" style="padding-top: 140px;">
+
+    <!-- Título + Botão Novo -->
+    <div class="d-flex justify-content-between align-items-end mb-4 border-bottom border-secondary pb-3">
+        <div>
+            <h6 class="text-uppercase text-info fw-bold mb-1" style="letter-spacing: 2px;">Administração</h6>
+            <h1 class="fw-bold text-white mb-0">Classificações</h1>
+        </div>
+
+        <div>
+            <a asp-action="Create" class="btn btn-info shadow-lg text-dark fw-bold">
+                <i class="bi bi-plus-lg me-2"></i> Nova Classificação
+            </a>
+        </div>
+    </div>
+
+
+    <!-- Barra de pesquisa -->
+    <div class="row mb-4 justify-content-center">
+        <div class="col-md-8">
+            <form method="get">
+                <div class="search-container shadow-sm d-flex">
+                    <input type="text" name="Q" class="form-control search-input bg-dark text-white"
+                           placeholder="Pesquisar classificação..."
+                           value="@f.Q" />
+
+                    <button type="submit" class="btn search-btn btn-info">
+                        <i class="bi bi-search text-dark"></i>
+                    </button>
+
+                    @if (!string.IsNullOrEmpty(f.Q))
+                    {
+                        <a asp-action="Index" class="btn clear-btn btn-danger" title="Limpar pesquisa">
+                            <i class="bi bi-x-lg"></i>
+                        </a>
+                    }
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- Feedback -->
+    @if (TempData["ok"] is string ok)
+    {
+        <div class="alert alert-success shadow">@ok</div>
+    }
+    @if (TempData["error"] is string err)
+    {
+        <div class="alert alert-danger shadow">@err</div>
+    }
+
+
+    <!-- Card da tabela -->
+    <div class="card border-0 shadow-lg overflow-hidden bg-dark">
+        <div class="card-body p-0">
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0 text-white">
+                    <thead class="bg-black text-info">
+                        <tr>
+                            <th class="ps-4 py-3 text-uppercase small fw-bold border-0">Nome</th>
+                            <th class="pe-4 py-3 text-end text-uppercase small fw-bold border-0">Ações</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var r in Model.Items)
+                        {
+                            <tr>
+                                <td class="ps-4 py-3 fw-bold">@r.Nome</td>
+
+                                <td class="pe-4 py-3 text-end">
+                                    <div class="btn-group shadow-sm">
+                                        <a asp-action="Edit" asp-route-id="@r.Id"
+                                           class="btn btn-sm btn-outline-primary"
+                                           title="Editar">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a>
+
+                                        @if (User.IsInRole("Admin") || User.IsInRole("ADMIN") || User.IsInRole("Administrador"))
+                                        {
+                                            <a asp-action="Delete" asp-route-id="@r.Id"
+                                               class="btn btn-sm btn-outline-danger"
+                                               title="Excluir">
+                                                <i class="bi bi-trash"></i>
+                                            </a>
+                                        }
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+
+                        @if (!Model.Items.Any())
+                        {
+                            <tr>
+                                <td colspan="2" class="text-secondary ps-4 py-3">Nenhuma classificação encontrada.</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card-footer bg-black border-0 py-3 ps-4 d-flex justify-content-between align-items-center">
+                <small class="text-muted fw-bold">Total: @Model.Total registros</small>
+            </div>
+
+        </div>
+    </div>
+
+</div>

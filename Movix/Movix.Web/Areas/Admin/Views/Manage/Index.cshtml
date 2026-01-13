@@ -1,0 +1,143 @@
+﻿
+
+
+@{
+    ViewData["Title"] = "Gestão — Visão Geral";
+}
+
+<div class="container pb-5" style="padding-top: 120px;">
+
+    <!-- Cabeçalho -->
+    <div class="mb-5 text-center">
+        <h6 class="text-uppercase text-secondary fw-bold mb-2" style="letter-spacing: 3px; font-size: .9rem;">
+            Administração
+        </h6>
+
+        <h1 class="fw-bold text-light display-5">Central de Gestão</h1>
+
+        <p class="text-secondary mt-3 mx-auto" style="max-width: 600px;">
+            Bem-vindo à área administrativa. Escolha um módulo para gerenciar seus conteúdos.
+        </p>
+    </div>
+
+    <div class="row g-4 justify-content-center">
+
+        <!-- FILMES -->
+        <div class="col-md-4 col-lg-3">
+            <div class="card h-100 bg-dark text-light border-0 shadow-sm card-hover-effect border-top border-secondary">
+                <div class="card-body p-4 text-center d-flex flex-column">
+
+                    <i class="bi bi-film display-5 mb-4 text-secondary"></i>
+
+                    <h4 class="fw-bold mb-3">Filmes</h4>
+                    <p class="text-secondary small mb-4 flex-grow-1">
+                        Cadastre, edite e remova filmes do catálogo.
+                    </p>
+
+                    <a asp-area="Admin" asp-controller="Filmes" asp-action="Index"
+                       class="btn btn-outline-light rounded-pill w-100 mt-auto btn-filmes">
+                        Acessar <i class="bi bi-arrow-right ms-1"></i>
+                    </a>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- GÊNEROS -->
+        <div class="col-md-4 col-lg-3">
+            <div class="card h-100 bg-dark text-light border-0 shadow-sm card-hover-effect border-top border-info">
+                <div class="card-body p-4 text-center d-flex flex-column">
+
+                    <i class="bi bi-tags-fill display-5 mb-4 text-info"></i>
+
+                    <h4 class="fw-bold mb-3">Gêneros</h4>
+                    <p class="text-secondary small mb-4 flex-grow-1">
+                        Gerencie os gêneros cadastrados.
+                    </p>
+
+                    <a asp-area="Admin" asp-controller="Manage" asp-action="Generos"
+                       class="btn btn-outline-info rounded-pill w-100 mt-auto">
+                        Acessar <i class="bi bi-arrow-right ms-1"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- CLASSIFICAÇÕES -->
+        <div class="col-md-4 col-lg-3">
+            <div class="card h-100 bg-dark text-light border-0 shadow-sm card-hover-effect border-top border-warning">
+                <div class="card-body p-4 text-center d-flex flex-column">
+
+                    <i class="bi bi-exclamation-triangle-fill display-5 mb-4 text-warning"></i>
+
+                    <h4 class="fw-bold mb-3">Classificações</h4>
+                    <p class="text-secondary small mb-4 flex-grow-1">
+                        Controle de faixas etárias dos filmes.
+                    </p>
+
+                    <a asp-area="Admin" asp-controller="Manage" asp-action="Classificacoes"
+                       class="btn btn-outline-warning rounded-pill w-100 mt-auto">
+                        Acessar <i class="bi bi-arrow-right ms-1"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- USUÁRIOS -->
+        <div class="col-md-4 col-lg-3">
+            <div class="card h-100 bg-dark text-light border-0 shadow-sm card-hover-effect border-top border-danger">
+                <div class="card-body p-4 text-center d-flex flex-column">
+
+                    <i class="bi bi-people-fill display-5 mb-4 text-danger"></i>
+
+                    <h4 class="fw-bold mb-3">Usuários</h4>
+                    <p class="text-secondary small mb-4 flex-grow-1">
+                        Gerencie administradores e permissões.
+                    </p>
+
+                    <a asp-area="Admin" asp-controller="Manage" asp-action="Usuarios"
+                       class="btn btn-outline-danger rounded-pill w-100 mt-auto">
+                        Acessar <i class="bi bi-arrow-right ms-1"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Voltar -->
+    <div class="mt-5 text-center">
+        <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index"
+           class="text-decoration-none text-secondary small hover-link">
+            <i class="bi bi-arrow-left me-1"></i> Voltar ao Paonel de Controle
+        </a>
+    </div>
+
+</div>
+
+<style>
+    /* Botão FILMES padrão */
+    .btn-filmes {
+        border-width: 2px !important;
+        color: #ffffff !important;
+        transition: 0.2s ease;
+    }
+
+        /* Ícone também branco */
+        .btn-filmes i {
+            color: #ffffff !important;
+        }
+
+        /* HOVER — fundo branco, texto preto, igual ao efeito usado nos cartões */
+        .btn-filmes:hover {
+            background: #ffffff !important;
+            color: #000000 !important;
+            
+        }
+
+            /* Ícone preto no hover */
+            .btn-filmes:hover i {
+                color: #000000 !important;
+            }
+
+</style>

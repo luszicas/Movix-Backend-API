@@ -1,0 +1,65 @@
+﻿@* @model Movix.Web.Areas.Admin.Models.FilmeEditVm *@
+
+@* @{ *@
+@*     ViewData["Title"] = "Editar Filme"; *@
+@* } *@
+
+@* <h2>@ViewData["Title"]</h2> *@
+
+@* <form asp-action="Edit" enctype="multipart/form-data" method="post"> *@
+@*     <input type="hidden" asp-for="Id" /> *@
+@*     <partial name="_Form" model="Model" /> *@
+@*     <button type="submit" class="btn btn-success">Salvar alterações</button> *@
+@*     <a asp-action="Index" class="btn btn-danger">Voltar</a> *@
+@* </form> *@
+
+
+
+
+@model Movix.Web.Areas.Admin.Models.FilmeEditVm
+
+@{
+    ViewData["Title"] = "Editar Filme";
+}
+
+<div class="container" style="padding-top: 120px; max-width: 850px;">
+
+    <!-- Card principal -->
+    <div class="card bg-dark text-white border-0 shadow-lg rounded-4">
+        <div class="card-body px-5 py-4">
+
+            <!-- Título + Seção -->
+            <h6 class="text-info text-uppercase fw-bold small mb-1" style="letter-spacing: 2px;">
+                Administração
+            </h6>
+
+            <h1 class="fw-bold mb-4">Editar Filme</h1>
+
+            <!-- Form -->
+            <form asp-action="Edit" enctype="multipart/form-data" method="post">
+                <input type="hidden" asp-for="Id" />
+
+                <!-- Reuso do formulário -->
+                <partial name="_Form" model="Model" />
+
+                <!-- Botões -->
+                <div class="d-flex gap-3 mt-4">
+
+                    <button type="submit" class="btn btn-primary px-4 fw-bold shadow-sm">
+                        <i class="bi bi-check-circle-fill me-2"></i>
+                        Salvar alterações
+                    </button>
+
+                    <a asp-action="Index" class="btn btn-outline-secondary px-4 shadow-sm">
+                        <i class="bi bi-arrow-left me-1"></i>
+                        Voltar
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,85 @@
+﻿@* @model Movix.Domain.Entities.Classificacao *@
+@* @{ *@
+@*     ViewData["Title"] = "Excluir Classificação"; *@
+@*     bool canDelete = User.IsInRole("Admin") || User.IsInRole("ADMIN") || User.IsInRole("Administrador"); *@
+@* } *@
+@* <h2 class="mb-3">Excluir Classificação</h2> *@
+
+@* @if (!canDelete) *@
+@* { *@
+@*     <div class="alert alert-warning">Somente administradores podem excluir.</div> *@
+@*     <a class="btn btn-secondary" asp-action="Index">Voltar</a> *@
+@* } *@
+@* else *@
+@* { *@
+@*     <div class="alert alert-danger">Deseja realmente excluir a classificação <strong>@Model.Nome</strong>?</div> *@
+@*     <form asp-action="Delete" method="post"> *@
+@*         @Html.AntiForgeryToken() *@
+@*         <input type="hidden" name="id" value="@Model.Id" /> *@
+@*         <button class="btn btn-danger" type="submit">Excluir</button> *@
+@*         <a class="btn btn-secondary ms-2" asp-action="Index">Cancelar</a> *@
+@*     </form> *@
+@* } *@
+
+
+
+@model Movix.Domain.Entities.Classificacao
+
+@{
+    ViewData["Title"] = "Excluir Classificação";
+
+    bool canDelete =
+        User.IsInRole("Admin") ||
+        User.IsInRole("ADMIN") ||
+        User.IsInRole("Administrador");
+}
+
+<div class="container" style="padding-top: 140px;">
+
+    <div class="d-flex justify-content-between align-items-end mb-4 border-bottom border-secondary pb-3">
+        <div>
+            <h6 class="text-uppercase text-info fw-bold mb-1" style="letter-spacing: 2px;">
+                Administração
+            </h6>
+            <h1 class="fw-bold text-white mb-0">Excluir Classificação</h1>
+        </div>
+
+        <a asp-action="Index" class="btn btn-secondary shadow">
+            <i class="bi bi-arrow-left"></i> Voltar
+        </a>
+    </div>
+
+    <div class="card bg-dark border-0 shadow-lg rounded-4 p-4">
+
+        @if (!canDelete)
+        {
+            <div class="alert alert-warning my-3">
+                Você não tem permissão para excluir esta classificação.
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-danger fw-semibold mb-4">
+                Tem certeza que deseja excluir a classificação
+                <strong class="text-white">"@Model.Nome"</strong>?
+            </div>
+
+            <form asp-action="Delete" method="post">
+                @Html.AntiForgeryToken()
+
+                <input type="hidden" name="id" value="@Model.Id" />
+
+                <div class="d-flex justify-content-end">
+                    <button class="btn btn-danger fw-bold shadow" type="submit">
+                        <i class="bi bi-trash me-1"></i> Excluir
+                    </button>
+
+                    <a class="btn btn-secondary ms-2 shadow" asp-action="Index">
+                        Cancelar
+                    </a>
+                </div>
+            </form>
+        }
+    </div>
+
+</div>

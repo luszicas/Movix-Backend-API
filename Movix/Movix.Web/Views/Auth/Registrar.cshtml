@@ -1,0 +1,190 @@
+﻿@* @model Movix.Web.Controllers.AuthController *@
+@* @{ *@
+@*     ViewData["Title"] = "Criar Conta"; *@
+@* } *@
+
+
+@* <div class="login-background d-flex justify-content-center align-items-center"> *@
+
+@*     <div class="glass-card p-4 rounded-4 shadow-lg" style="width: 100%; max-width: 420px;"> *@
+
+@*         <h2 class="text-center mb-4 fw-bold mt-5" style="letter-spacing: 1px; color: blue;"> *@
+@*             Movix *@
+@*         </h2> *@
+
+@*         <h5 class="text-center mb-4 text-white-50">Criar nova conta</h5> *@
+
+@*         @foreach (var err in ViewData.ModelState.Values.SelectMany(v => v.Errors)) *@
+@*         { *@
+@*             <div class="alert alert-danger">@err.ErrorMessage</div> *@
+@*         } *@
+
+@*         <form asp-action="Registrar" method="post"> *@
+
+@*             <div class="form-group mb-3"> *@
+@*                 <label class="form-label text-white-50">Email</label> *@
+@*                 <input name="Email" *@
+@*                        type="email" *@
+@*                        class="form-control rounded-3 bg-dark text-light border-secondary" *@
+@*                        placeholder="seuemail@exemplo.com" *@
+@*                        required /> *@
+@*             </div> *@
+
+@*             <div class="form-group mb-3"> *@
+@*                 <label class="form-label text-white-50">Senha</label> *@
+@*                 <input name="Password" *@
+@*                        type="password" *@
+@*                        class="form-control rounded-3 bg-dark text-light border-secondary" *@
+@*                        placeholder="••••••" *@
+@*                        required /> *@
+@*             </div> *@
+
+@*             <div class="form-group mb-3"> *@
+@*                 <label class="form-label text-white-50">Confirmar Senha</label> *@
+@*                 <input name="ConfirmPassword" *@
+@*                        type="password" *@
+@*                        class="form-control rounded-3 bg-dark text-light border-secondary" *@
+@*                        placeholder="••••••" *@
+@*                        required /> *@
+@*             </div> *@
+
+@*             <button type="submit" *@
+@*                     class="btn btn-success w-100 mt-2 rounded-3 fw-semibold shadow-sm"> *@
+@*                 Criar Conta *@
+@*             </button> *@
+@*         </form> *@
+
+@*         <p class="text-center mt-3 text-white-50"> *@
+@*             Já tem uma conta? *@
+@*             <a href="/Auth/Login" class="text-decoration-none text-info fw-semibold"> *@
+@*                 Entrar *@
+@*             </a> *@
+@*         </p> *@
+
+@*         <p class="text-center mb-0"> *@
+@*             <a href="/" class="text-decoration-none text-white-50">← Voltar para o site</a> *@
+@*         </p> *@
+
+@*     </div> *@
+
+@* </div> *@
+
+@* @section Scripts { *@
+@*     <partial name="_ValidationScriptsPartial" /> *@
+@* } *@
+
+
+
+@model Movix.Web.Controllers.AuthController
+@{
+    ViewData["Title"] = "Criar Conta";
+}
+
+<div class="login-background d-flex justify-content-center align-items-center">
+
+    <div class="auth-card p-4 p-md-5 rounded-4 shadow">
+
+        <h2 class="text-center fw-bold text-light mb-1">Criar Conta</h2>
+        <p class="text-center text-muted mb-4">Bem-vindo ao Movix</p>
+
+        @foreach (var err in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+        {
+            <div class="alert alert-danger py-2 mb-2">
+                @err.ErrorMessage
+            </div>
+        }
+
+        <form asp-action="Registrar" method="post">
+
+            <div class="mb-3">
+                <label class="form-label text-light">Email</label>
+                <input name="Email"
+                       type="email"
+                       class="form-control auth-input"
+                       placeholder="seuemail@exemplo.com"
+                       required />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label text-light">Senha</label>
+                <input name="Password"
+                       type="password"
+                       class="form-control auth-input"
+                       placeholder="••••••"
+                       required />
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label text-light">Confirmar Senha</label>
+                <input name="ConfirmPassword"
+                       type="password"
+                       class="form-control auth-input"
+                       placeholder="••••••"
+                       required />
+            </div>
+
+            <button type="submit"
+                    class="btn btn-primary w-100 fw-semibold py-2 rounded-3">
+                Criar Conta
+            </button>
+        </form>
+
+        <p class="text-center text-muted mt-3 mb-0">
+            Já tem conta?
+            <a href="/Auth/Login" class="text-decoration-none text-primary">Entrar</a>
+        </p>
+
+        <p class="text-center mt-2">
+            <a href="/" class="text-decoration-none text-muted small">← Voltar ao site</a>
+        </p>
+
+    </div>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+<style>
+    /* Cartão clean */
+    .auth-card {
+        width: 100%;
+        max-width: 420px;
+        background: #111;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    /* Inputs modernos */
+    .auth-input {
+        background: #181818;
+        border: 1px solid #2a2a2a;
+        color: #fff;
+        border-radius: 6px;
+        padding: 10px 14px;
+        transition: 0.2s;
+    }
+
+        .auth-input:focus {
+            border-color: #3d7bff;
+            outline: none;
+            background: #1e1e1e;
+        }
+
+    /* Botão */
+    .btn-primary {
+        background: #3d7bff;
+        border: none;
+    }
+
+        .btn-primary:hover {
+            background: #3166d3;
+        }
+
+    /* Fundo */
+    .login-background {
+        min-height: 100vh;
+        /* background: linear-gradient(180deg, #0a0a0a, #141414); */
+        padding: 20px;
+    }
+</style>
